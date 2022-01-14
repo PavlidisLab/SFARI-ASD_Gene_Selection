@@ -2,9 +2,13 @@ import numpy as np
 import pandas as pd
 import gzip
 import sys
+import os
+import pickle
 
 CLINVAR=sys.argv[1]
 OUTDIR=sys.argv[2]
+
+print("starting ClinVar data ingestion...")
 
 def get_vcf_names(vcf_path):
     with gzip.open(vcf_path, "rt") as ifile:
@@ -32,20 +36,19 @@ acceptable_status = [
 
 for row in vcf.itertuples():
     info_dict = {}
-
-    # extracting gene info
     info = row[8].split(';')
     for i in info:
         info_dict[i.split('=')[0]] = i.split('=')[1]
-    gene_symb = info_dict['GENEINFO'].split(':')[0]
-    info_dict['GENE_ID'] = info_dict['GENEINFO'].split(':')[1]
-    del info_dict['GENEINFO']
-
-    print(info_dict)
+    
     # filtering criteria
     if info_dict['CLNREVSTAT'] in acceptable_status:
         if info_dict['CLNVC'] == "single_nucleotide_variant":
-            if info_dict['MC'].split('|')[1] == "missense_variant":
+            if ('MC' in info_dict) and (info_dict['MC'].split('|')[1] == "missense_variant"):
+                # extracting gene info
+                gene_symb = info_dict['GENEINFO'].split(':')[0]
+                info_dict['GENE_ID'] = info_dict['GENEINFO'].split(':')[1]
+                del info_dict['GENEINFO']
+                
                 # adding non-INFO properties
                 info_dict['CHROM'] = row[1]
                 info_dict['POS'] = row[2]
@@ -59,4 +62,6 @@ for row in vcf.itertuples():
 
 # save as dict
 with open(os.path.join(OUTDIR,'dict_clinvar.pickle'), 'wb') as f:
-        pickle.dump(dict_clinvar, f, protocol=pickle.HIGHEST_PROTOCOL)
+    pickle.dump(dict_clinvar, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+print("done.")
