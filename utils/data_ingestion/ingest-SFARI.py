@@ -16,22 +16,28 @@ with open(SFARI, 'r') as SFARI_gene:
 		if index == 0:
 			continue
 		line = str(line).split("\"")
-		print(len(line), line)
-		if line[-1].split(',')[1] == "1" and line[-1].split(',')[0] != "3":
-			gene_info = {}
-			gene = line[0].split(',')[1]
-		
-			gene_info["SFARI_score"] = "S"
-			if line[-1].split(',')[0] == "1":
-				gene_info["SFARI_score"] += "1"
-			else:
-				gene_info["SFARI_score"] += "2"
-			#gene_info["gene_name"] = line[1]
-			#gene_info["Ensembl_id"] = line[2].split(',')[0]
-			#gene_info["chrom"] = line[2].split(',')[1]
-			#gene_info["genetic_category"] = line[3]
+		#print(len(line), line)
+		syndr = str(line[-1].split(',')[2])
+		score = str(line[-1].split(',')[1])
 
-			dict_SFARI[gene] = gene_info
+		#if score in ["1","2"] or syndr == "1":	
+		gene_info = {}
+		gene = line[0].split(',')[1]
+		gene_info["SFARI_score"] = ""
+		#print(gene, syndr, score)
+		if score  == "1":
+			gene_info["SFARI_score"] += "1"
+		elif score == "2":
+			gene_info["SFARI_score"] += "2"
+		elif score == "3":
+			gene_info["SFARI_score"] += "3"
+		if syndr == "1":
+			gene_info["SFARI_score"] += "S"
+		#gene_info["Ensembl_id"] = line[2].split(',')[0]
+		#gene_info["gene_name"] = line[1]
+		#gene_info["chrom"] = line[2].split(',')[1]
+		#gene_info["genetic_category"] = line[3]
+		dict_SFARI[gene] = gene_info
 
 #save as dict
 with open(os.path.join(OUTDIR,'dict_SFARI.pickle'), 'wb') as f:
