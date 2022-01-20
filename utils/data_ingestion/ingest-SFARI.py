@@ -23,16 +23,16 @@ with open(SFARI, 'r') as SFARI_gene:
 		#if score in ["1","2"] or syndr == "1":	
 		gene_info = {}
 		gene = line[0].split(',')[1]
-		gene_info["SFARI_score"] = ""
+		gene_info["SFARI Score"] = ""
 		#print(gene, syndr, score)
 		if score  == "1":
-			gene_info["SFARI_score"] += "1"
+			gene_info["SFARI Score"] += "1"
 		elif score == "2":
-			gene_info["SFARI_score"] += "2"
+			gene_info["SFARI Score"] += "2"
 		elif score == "3":
-			gene_info["SFARI_score"] += "3"
+			gene_info["SFARI Score"] += "3"
 		if syndr == "1":
-			gene_info["SFARI_score"] += "S"
+			gene_info["SFARI Score"] += "S"
 		#gene_info["Ensembl_id"] = line[2].split(',')[0]
 		#gene_info["gene_name"] = line[1]
 		#gene_info["chrom"] = line[2].split(',')[1]
