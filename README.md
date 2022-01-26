@@ -18,13 +18,19 @@ Overviews of important project DIRs listed in this section.
 └── `main.csv` the output file  
 
 ###### CSV Feature Columns
-- `Gene Symbol`
-- `Source`
-- `SFARI Score`
-- `ClinVar: Pathogenic & Likely Pathogenic`
-- `ClinVar: Benign & Likely Benign`
-- `ClinVar: VUS`
-- `ClinVar: Conflicting`
+- `Gene Symbol`: <string>
+- `Source`: <string>
+- `SFARI Score`: <string>
+DIOPT  
+- `Fly Symbol`: <string>
+- `Best Fly Ortholog`: <string>
+- `Yeast Symbol`: <string>
+- `Best Yeast Ortholog` : <string>
+ClinVar  
+- `ClinVar: Pathogenic & Likely Pathogenic`: <int>
+- `ClinVar: Benign & Likely Benign`: <int>
+- `ClinVar: VUS`: <int>
+- `ClinVar: Conflicting`: <int>
 
 #### Project Code DIR
 ├── `/utils` helper scripts  
