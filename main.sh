@@ -33,18 +33,21 @@ main () {
 	module load scipy-stack;
 
 	# set-up environment
-	mkdir $OUTDIR/ingested_data
+	#mkdir $OUTDIR/ingested_data
 
 	# Step 1: Data Ingestion via Database Files
 	
 	### SFARI (.csv file)
-	bash $PROGDIR/utils/data-ingestion/ingest-SFARI.py $OUTDIR/ingested_data $SFARI
-	
+	#bash $PROGDIR/utils/data-ingestion/ingest-SFARI.py $OUTDIR/ingested_data $SFARI
+	bash $PROGDIR/utils/data-ingestion/ingest-SFARI.py $OUTDIR $SFARI
+
 	### DIOPT
-	bash $PROGDIR/utils/data-ingestion/ingest-DIOPT.py $OUTDIR/ingested_data $DIOPT
+	#bash $PROGDIR/utils/data-ingestion/ingest-DIOPT.py $OUTDIR/ingested_data $DIOPT
+	bash $PROGDIR/utils/data-ingestion/ingest-DIOPT.py $OUTDIR $DIOPT
 
 	### ClinVar (.vcf.gz file)
-	bash $PROGDIR/utils/data-ingestion/ingest-clinvar.py $OUTDIR/ingested_data $CLINVAR
+	#bash $PROGDIR/utils/data-ingestion/ingest-clinvar.py $OUTDIR/ingested_data $CLINVAR
+	bash $PROGDIR/utils/data-ingestion/ingest-clinvar.py $OUTDIR $CLINVAR
 
 	### Gene2PubMed
 

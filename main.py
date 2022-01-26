@@ -1,6 +1,8 @@
 import sys
 import pickle
 import os
+import pandas as pd
+import numpy as np
 
 OUTDIR=sys.argv[1]
 dict_main = {} # main data collection
@@ -16,6 +18,46 @@ with open(os.path.join(OUTDIR, 'dict_SFARI.pickle'), 'rb') as f:
 		if gene in dict_SFARI:
 			dict_main[gene]['Source'] += "SFARI | "
 			dict_main[gene].update(dict_SFARI[gene])
+
+# DIOPT =========================================
+#df_fly = pd.read_csv(os.path.join(os.path.join(OUTDIR,'ingested_data'),'df_fly.csv'),sep='\t')
+#df_yeast = pd.read_csv(os.path.join(os.path.join(OUTDIR,'ingested_data'),'df_yeast.csv'),sep='\t')
+df_fly = pd.read_csv(os.path.join(OUTDIR,'df_fly.csv'),sep='\t')
+df_yeast = pd.read_csv(os.path.join(OUTDIR,'df_yeast.csv'),sep='\t')
+for gene in dict_main:
+    # filtering criteria
+    ### fly
+    fly_score = 0
+    fly_symb = ''
+    best_fly_orth = False
+    for index, row in df_fly.loc[df_fly['human_symbol'] == gene].iterrows():
+        if 'HGNC' not in dict_main[gene]:
+            dict_main[gene]['HGNC'] = row['HGNC']
+        if row['score'] > fly_score:
+            fly_symb = row['symbol2']
+            fly_score = row['score']
+        if row['best_score'] == 'Yes' and row['best_score_rev'] == 'Yes' and row['confidence'] == 'high':
+            best_fly_orth = True
+    ### yeast
+    yeast_score = 0
+    yeast_symb = ''
+    best_yeast_orth = False
+    for index, row in df_yeast.loc[df_yeast['human_symbol'] == gene].iterrows():
+        if 'HGNC' not in dict_main[gene]:
+            dict_main[gene]['HGNC'] = row['HGNC']
+        if row['score'] > yeast_score:
+            yeast_symb = row['symbol2']
+            yeast_score = row['score']
+        if row['best_score'] == 'Yes' and row['best_score_rev'] == 'Yes' and row['confidence'] == 'high':
+            best_yeast_orth = True
+
+    # Add to main
+    dict_main[gene]['Best DIOPT Score (Fly)'] = fly_score
+    dict_main[gene]['Symbol (Fly)'] = fly_symb
+    dict_main[gene]['Best Ortholog (Fly)'] = best_fly_orth
+    dict_main[gene]['Best DIOPT Score (Yeast)'] = yeast_score
+    dict_main[gene]['Symbol (Yeast)'] = yeast_symb
+    dict_main[gene]['Best Ortholog (Yeast)'] = best_yeast_orth
 
 # ClinVar =======================================
 with open(os.path.join(OUTDIR, 'dict_clinvar.pickle'), 'rb') as f:

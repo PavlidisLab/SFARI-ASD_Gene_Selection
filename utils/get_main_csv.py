@@ -11,8 +11,15 @@ with open(os.path.join(OUTDIR,'dict_main.pickle'), 'rb') as f, open(os.path.join
 	d = pickle.load(f)
 	#print(d)
 	headers = [	'Gene Symbol', 
+			'HGNC', 
 			'Source', 
 			'SFARI Score',
+			'Best DIOPT Score (Fly)', 
+			'Symbol (Fly)', 
+			'Best Ortholog (Fly)', 
+			'Best DIOPT Score (Yeast)', 
+			'Symbol (Yeast)', 
+			'Best Ortholog (Yeast)', 
 			'ClinVar: Pathogenic & Likely Pathogenic', 
 			'ClinVar: Benign & Likely Benign', 
 			'ClinVar: VUS', 
@@ -21,7 +28,7 @@ with open(os.path.join(OUTDIR,'dict_main.pickle'), 'rb') as f, open(os.path.join
 		] #list of column fields wanted
 
 
-	w = csv.DictWriter( g, fieldnames=headers)
+	w = csv.DictWriter( g, fieldnames=headers, delimiter='\t')
 	w.writeheader()
 	for key, val in d.items():
 		row = {'Gene Symbol': key}
