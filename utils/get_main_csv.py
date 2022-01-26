@@ -25,6 +25,8 @@ with open(os.path.join(OUTDIR,'dict_main.pickle'), 'rb') as f, open(os.path.join
 			'Symbol (Yeast)',
                         'SGD ID',
 			'Best Ortholog (Yeast)',
+                        #Depth of Conservation (via DIOPT)
+                        'Depth of Conservations (8 species total)', 
                         #ClinVar
 			'ClinVar: Pathogenic & Likely Pathogenic', 
 			'ClinVar: Benign & Likely Benign', 

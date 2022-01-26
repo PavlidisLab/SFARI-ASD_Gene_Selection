@@ -40,19 +40,19 @@ main () {
 	# =======================================
 
 	### Gene List (.txt file)
-	python3 $PROGDIR/utils/data_ingestion/ingest-gene_list.py $OUTDIR $GENE_LIST
+	python3 $PROGDIR/data_ingestion/ingest-gene_list.py $OUTDIR $GENE_LIST
 
 	### SFARI (.csv file)
 	#bash $PROGDIR/utils/data-ingestion/ingest-SFARI.py $OUTDIR/ingested_data $SFARI
-	python3 $PROGDIR/utils/data_ingestion/ingest-SFARI.py $OUTDIR $SFARI
+	python3 $PROGDIR/data_ingestion/ingest-SFARI.py $OUTDIR $SFARI
 
 	### DIOPT
 	#bash $PROGDIR/utils/data-ingestion/ingest-DIOPT.py $OUTDIR/ingested_data $DIOPT
-	python3 $PROGDIR/utils/data_ingestion/ingest-DIOPT.py $OUTDIR $DIOPT
+	python3 $PROGDIR/data_ingestion/ingest-DIOPT.py $OUTDIR $DIOPT
 
 	### ClinVar (.vcf.gz file)
 	#bash $PROGDIR/utils/data-ingestion/ingest-clinvar.py $OUTDIR/ingested_data $CLINVAR
-	python3 $PROGDIR/utils/data_ingestion/ingest-clinvar.py $OUTDIR $CLINVAR
+	python3 $PROGDIR/data_ingestion/ingest-clinvar.py $OUTDIR $CLINVAR
 
 	### Gene2PubMed
 
@@ -66,7 +66,18 @@ main () {
 	# =======================================
 	# Step 2: Feature Extraction
 	# =======================================
-	python3 $PROGDIR/main.py $OUTDIR
+
+	### general features
+	python3 $PROGDIR/feature_extraction/extract_general.py $OUTDIR
+
+	### DIOPT features
+	python3 $PROGDIR/feature_extraction/extract_DIOPT.py $OUTDIR $DIOPT
+
+	### ClinVar features
+	python3 $PROGDIR/feature_extraction/extract_clinvar.py $OUTDIR 
+
+	### VariCarta
+
 
 	### get CSV	
 	python3 $PROGDIR/utils/get_main_csv.py $OUTDIR
