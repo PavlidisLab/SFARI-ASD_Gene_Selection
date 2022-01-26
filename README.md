@@ -19,7 +19,8 @@ Overviews of important project DIRs listed in this section.
 
 #### CSV Feature Columns
 - `Gene Symbol`: string (e.g. MYH9, ACTB)
-- `Source`: db_name | db_name | db_name
+- `HGNC`: integer ID (e.g. 7579, 132) (via DIOPT)
+- `Source`: db_name | db_name | ...
 - `SFARI Score`: 1,2,S,1S,2S,3S  
 ###### DIOPT  
 - `Best DIOPT Score (Fly)`: integer score
