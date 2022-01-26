@@ -28,18 +28,23 @@ readonly VARICARTA="$1"; shift;
 # ===============================================
 main () {
 	# load required modules from Compute Canada
+	source /cvmfs/soft.computecanada.ca/config/profile/bash.sh
+	module load python/3.7.0;
+	module load scipy-stack;
 
+	# set-up environment
+	mkdir $OUTDIR/ingested_data
 
 	# Step 1: Data Ingestion via Database Files
 	
 	### SFARI (.csv file)
-	bash $PROGDIR/utils/data-ingestion/ingest-SFARI.py $OUTDIR $SFARI
+	bash $PROGDIR/utils/data-ingestion/ingest-SFARI.py $OUTDIR/ingested_data $SFARI
 	
 	### DIOPT
-	
+	bash $PROGDIR/utils/data-ingestion/ingest-DIOPT.py $OUTDIR/ingested_data $DIOPT
 
 	### ClinVar (.vcf.gz file)
-	#bash $PROGDIR/utils/data-ingestion/ingest-clin_var.py $OUTDIR $CLINVAR
+	bash $PROGDIR/utils/data-ingestion/ingest-clinvar.py $OUTDIR/ingested_data $CLINVAR
 
 	### Gene2PubMed
 
