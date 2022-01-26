@@ -25,10 +25,10 @@ Overviews of important project DIRs listed in this section.
 ###### DIOPT  
 - `Best DIOPT Score (Fly)`: integer score
 - `Symbol (Fly)`: string (e.g. zip, Act5C)
-- `Best Ortholog (Fly)`: boolean (Y,N)
+- `Best Ortholog (Fly)`: boolean
 - `Best DIOPT Score (Yeast)`: integer score
 - `Symbol (Yeast)`: string (e.g. MYO1, ACT1)
-- `Best Ortholog (Yeast)`: boolean (Y,N)
+- `Best Ortholog (Yeast)`: boolean
 ###### ClinVar  
 - `ClinVar: Pathogenic & Likely Pathogenic`: count
 - `ClinVar: Benign & Likely Benign`: count
