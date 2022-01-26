@@ -25,10 +25,12 @@ with open(os.path.join(OUTDIR, 'dict_SFARI.pickle'), 'rb') as f:
 df_fly = pd.read_csv(os.path.join(OUTDIR,'df_fly.csv'),sep='\t')
 df_yeast = pd.read_csv(os.path.join(OUTDIR,'df_yeast.csv'),sep='\t')
 for gene in dict_main:
+    dict_main[gene]['Source'] += "DIOPT | "
     # filtering criteria
     ### fly
     fly_score = 0
     fly_symb = ''
+    fly_id = ''
     best_fly_orth = False
     for index, row in df_fly.loc[df_fly['human_symbol'] == gene].iterrows():
         if 'HGNC' not in dict_main[gene]:
@@ -36,11 +38,13 @@ for gene in dict_main:
         if row['score'] > fly_score:
             fly_symb = row['symbol2']
             fly_score = row['score']
+            fly_id = row['species_specific_id2']
         if row['best_score'] == 'Yes' and row['best_score_rev'] == 'Yes' and row['confidence'] == 'high':
             best_fly_orth = True
     ### yeast
     yeast_score = 0
     yeast_symb = ''
+    yeast_id = ''
     best_yeast_orth = False
     for index, row in df_yeast.loc[df_yeast['human_symbol'] == gene].iterrows():
         if 'HGNC' not in dict_main[gene]:
@@ -48,15 +52,18 @@ for gene in dict_main:
         if row['score'] > yeast_score:
             yeast_symb = row['symbol2']
             yeast_score = row['score']
+            yeast_id = row['species_specific_id2']
         if row['best_score'] == 'Yes' and row['best_score_rev'] == 'Yes' and row['confidence'] == 'high':
             best_yeast_orth = True
 
     # Add to main
     dict_main[gene]['Best DIOPT Score (Fly)'] = fly_score
     dict_main[gene]['Symbol (Fly)'] = fly_symb
+    dict_main[gene]['Flybase ID'] = fly_id
     dict_main[gene]['Best Ortholog (Fly)'] = best_fly_orth
     dict_main[gene]['Best DIOPT Score (Yeast)'] = yeast_score
     dict_main[gene]['Symbol (Yeast)'] = yeast_symb
+    dict_main[gene]['SGD ID'] = yeast_id
     dict_main[gene]['Best Ortholog (Yeast)'] = best_yeast_orth
 
 # ClinVar =======================================

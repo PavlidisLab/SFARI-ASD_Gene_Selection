@@ -10,16 +10,22 @@ OUTDIR=sys.argv[1]
 with open(os.path.join(OUTDIR,'dict_main.pickle'), 'rb') as f, open(os.path.join(OUTDIR,"main.csv"),'w') as g:
 	d = pickle.load(f)
 	#print(d)
-	headers = [	'Gene Symbol', 
+	headers = [     #general
+                        'Gene Symbol', 
 			'HGNC', 
 			'Source', 
 			'SFARI Score',
+                        #DIOPT-Fly
 			'Best DIOPT Score (Fly)', 
-			'Symbol (Fly)', 
+			'Symbol (Fly)',
+                        'Flybase ID', 
 			'Best Ortholog (Fly)', 
+                        #DIOPT-Yeast
 			'Best DIOPT Score (Yeast)', 
-			'Symbol (Yeast)', 
-			'Best Ortholog (Yeast)', 
+			'Symbol (Yeast)',
+                        'SGD ID',
+			'Best Ortholog (Yeast)',
+                        #ClinVar
 			'ClinVar: Pathogenic & Likely Pathogenic', 
 			'ClinVar: Benign & Likely Benign', 
 			'ClinVar: VUS', 

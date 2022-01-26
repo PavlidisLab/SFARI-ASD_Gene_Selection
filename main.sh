@@ -9,20 +9,20 @@ readonly PROGDIR=$(readlink -m $(dirname ${BASH_SOURCE[0]}));
 
 # Input Params===================================
 # ===============================================
-if [[ $# -lt 6 ]]; then
+if [[ $# -lt 7 ]]; then
         #echo "Usage: $PROGNAME GENE_LIST DB1 DB2 [...]".
-	echo "Usage: $PROGNAME <OUTDIR> <SFARI> <DIOPT> <GENE2PUBMED> <CLINVAR> <VARICARTA>"
+	echo "Usage: $PROGNAME <SFARI> <DIOPT> <GENE2PUBMED> <CLINVAR> <VARICARTA> <OUTDIR> <GENE LIST>"
 	exit;
 fi
 
-readonly OUTDIR="$1"; shift;
 readonly SFARI="$1"; shift;
 #readonly -a DBS=("$@");
 readonly DIOPT="$1"; shift;
-readonly CLINVAR="$1"; shift;
 readonly GENE2PUBMED="$1"; shift;
+readonly CLINVAR="$1"; shift;
 readonly VARICARTA="$1"; shift;
-
+readonly OUTDIR="$1"; shift;
+readonly GENE_LIST="$1"; shift;
 
 # Main Pipeline==================================
 # ===============================================
@@ -35,19 +35,24 @@ main () {
 	# set-up environment
 	#mkdir $OUTDIR/ingested_data
 
+	# =======================================
 	# Step 1: Data Ingestion via Database Files
-	
+	# =======================================
+
+	### Gene List (.txt file)
+	python3 $PROGDIR/utils/data_ingestion/ingest-gene_list.py $OUTDIR $GENE_LIST
+
 	### SFARI (.csv file)
 	#bash $PROGDIR/utils/data-ingestion/ingest-SFARI.py $OUTDIR/ingested_data $SFARI
-	bash $PROGDIR/utils/data-ingestion/ingest-SFARI.py $OUTDIR $SFARI
+	python3 $PROGDIR/utils/data_ingestion/ingest-SFARI.py $OUTDIR $SFARI
 
 	### DIOPT
 	#bash $PROGDIR/utils/data-ingestion/ingest-DIOPT.py $OUTDIR/ingested_data $DIOPT
-	bash $PROGDIR/utils/data-ingestion/ingest-DIOPT.py $OUTDIR $DIOPT
+	python3 $PROGDIR/utils/data_ingestion/ingest-DIOPT.py $OUTDIR $DIOPT
 
 	### ClinVar (.vcf.gz file)
 	#bash $PROGDIR/utils/data-ingestion/ingest-clinvar.py $OUTDIR/ingested_data $CLINVAR
-	bash $PROGDIR/utils/data-ingestion/ingest-clinvar.py $OUTDIR $CLINVAR
+	python3 $PROGDIR/utils/data_ingestion/ingest-clinvar.py $OUTDIR $CLINVAR
 
 	### Gene2PubMed
 
@@ -55,9 +60,17 @@ main () {
 	### VariCarta
 
 
-	# Step 2: Feature Extraction
+	### gnomAD
 
+
+	# =======================================
+	# Step 2: Feature Extraction
+	# =======================================
+	python3 $PROGDIR/main.py $OUTDIR
+
+	### get CSV	
+	python3 $PROGDIR/utils/get_main_csv.py $OUTDIR
 
 } #main
 
-
+main
