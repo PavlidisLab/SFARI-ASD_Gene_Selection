@@ -22,10 +22,12 @@ Overviews of important project DIRs listed in this section.
 - `Source`: db_name | db_name | db_name
 - `SFARI Score`: 1,2,S,1S,2S,3S  
 ###### DIOPT  
-- `Fly Symbol`: string (e.g. zip, Act5C)
-- `Best Fly Ortholog`: boolean (Y,N)
-- `Yeast Symbol`: string (e.g. MYO1, ACT1)
-- `Best Yeast Ortholog`: boolean (Y,N)
+- `Best DIOPT Score (Fly)`: integer score
+- `Symbol (Fly)`: string (e.g. zip, Act5C)
+- `Best Ortholog (Fly)`: boolean (Y,N)
+- `Best DIOPT Score (Yeast)`: integer score
+- `Symbol (Yeast)`: string (e.g. MYO1, ACT1)
+- `Best Ortholog (Yeast)`: boolean (Y,N)
 ###### ClinVar  
 - `ClinVar: Pathogenic & Likely Pathogenic`: count
 - `ClinVar: Benign & Likely Benign`: count
