@@ -9,18 +9,18 @@ readonly PROGDIR=$(readlink -m $(dirname ${BASH_SOURCE[0]}));
 
 # Input Params===================================
 # ===============================================
-if [[ $# -lt 7 ]]; then
+if [[ $# -lt 6 ]]; then
         #echo "Usage: $PROGNAME GENE_LIST DB1 DB2 [...]".
 	echo "Usage: $PROGNAME <SFARI> <DIOPT> <GENE2PUBMED> <CLINVAR> <VARICARTA> <OUTDIR> <GENE LIST>"
 	exit;
 fi
 
-readonly SFARI="$1"; shift;
+readonly INDIR="$1"; shift;
 #readonly -a DBS=("$@");
 readonly DIOPT="$1"; shift;
 readonly GENE2PUBMED="$1"; shift;
 readonly CLINVAR="$1"; shift;
-readonly VARICARTA="$1"; shift;
+#readonly VARICARTA="$1"; shift;
 readonly OUTDIR="$1"; shift;
 readonly GENE_LIST="$1"; shift;
 
@@ -34,6 +34,10 @@ main () {
 
 	# set-up environment
 	#mkdir $OUTDIR/ingested_data
+
+	# download input files
+	#wget -O $INDIR/VariCarta_export.tsv 'https://varicarta.msl.ubc.ca/exports/export_latest.tsv'
+	#wget -O $INDIR/SFARI_export.csv 'https://gene.sfari.org//wp-content/themes/sfari-gene/utilities/download-csv.php?api-endpoint=genes'
 
 	# =======================================
 	# Step 1: Data Ingestion via Database Files
