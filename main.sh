@@ -11,8 +11,8 @@ readonly PROGDIR=$(readlink -m $(dirname ${BASH_SOURCE[0]}));
 # ===============================================
 if [[ $# -lt 6 ]]; then
         #echo "Usage: $PROGNAME OUTDIR GENE_LIST DB1 DB2 [...]".
-	echo "Usage: $PROGNAME <OUTDIR> <GENE LIST> <HGNC> <SFARI> <DIOPT> <CLINVAR> <GENE2PUBMED> <VARICARTA>"
-	exit;
+    echo "Usage: $PROGNAME <OUTDIR> <GENE LIST> <HGNC> <SFARI> <DIOPT> <CLINVAR> <GENE2PUBMED> <VARICARTA>"
+    exit;
 fi
 
 #readonly INDIR="$1"; shift;
@@ -28,65 +28,65 @@ readonly VARICARTA="$1"; shift;
 # Main Pipeline==================================
 # ===============================================
 main () {
-	# load required modules from Compute Canada
-	source /cvmfs/soft.computecanada.ca/config/profile/bash.sh
-	module load python/3.7.0;
-	module load scipy-stack;
+    # load required modules from Compute Canada
+    source /cvmfs/soft.computecanada.ca/config/profile/bash.sh
+    module load python/3.7.0;
+    module load scipy-stack;
 
-	# set-up environment
-	#mkdir $OUTDIR/ingested_data
+    # set-up environment
+    #mkdir $OUTDIR/ingested_data
 
-	# download input files
-	# Helper script available to help download most of the necessary files
+    # download input files
+    # Helper script available to help download most of the necessary files
 
-	# =======================================
-	# Step 1: Data Ingestion via Database Files
-	# =======================================
+    # =======================================
+    # Step 1: Data Ingestion via Database Files
+    # =======================================
 
-	### Gene List (.txt file)
-	python3 $PROGDIR/data_ingestion/ingest-gene_list.py $OUTDIR $GENE_LIST
+    ### Gene List (.txt file)
+    python3 $PROGDIR/data_ingestion/ingest-gene_list.py $OUTDIR $GENE_LIST
 
-	### Gene Names & IDs
-	python3 data_ingestion/ingest-HGNC.py $OUTDIR $HGNC
+    ### Gene Names & IDs
+    python3 $PROGDIR/data_ingestion/ingest-HGNC.py $OUTDIR $HGNC
 
-	### SFARI (.csv file)
-	python3 $PROGDIR/data_ingestion/ingest-SFARI.py $OUTDIR $SFARI
+    ### SFARI (.csv file)
+    python3 $PROGDIR/data_ingestion/ingest-SFARI.py $OUTDIR $SFARI
 
-	### DIOPT
-	python3 $PROGDIR/data_ingestion/ingest-DIOPT.py $OUTDIR $DIOPT
+    ### DIOPT
+    python3 $PROGDIR/data_ingestion/ingest-DIOPT.py $OUTDIR $DIOPT
 
-	### ClinVar (.vcf.gz file)
-	python3 $PROGDIR/data_ingestion/ingest-clinvar.py $OUTDIR $CLINVAR
+    ### ClinVar (.vcf.gz file)
+    python3 $PROGDIR/data_ingestion/ingest-clinvar.py $OUTDIR $CLINVAR
 
-	### VariCarta
+    ### VariCarta
+    python3 $PROGDIR/data_ingestion/ingest-varicarta.py $OUTDIR $VARICARTA
 
-
-	### gnomAD
-
-
-	# =======================================
-	# Step 2: Feature Extraction
-	# =======================================
-
-	### general features
-	python3 $PROGDIR/feature_extraction/extract_general.py $OUTDIR
-	python3 $PROGDIR/feature_extraction/extract_HGNC.py $OUTDIR
-
-	### DIOPT features
-	python3 $PROGDIR/feature_extraction/extract_DIOPT.py $OUTDIR $DIOPT
-
-	### ClinVar features
-	python3 $PROGDIR/feature_extraction/extract_clinvar.py $OUTDIR 
-
-	### Gene2PubMed
-        ### Features directly added to main data sheet
-        python3 $PROGDIR/data_ingestion/ingest-gene2pubmed.py $OUTDIR $GENE2PUBMED
-
-	### VariCarta
+    ### gnomAD
 
 
-	### get CSV	
-	python3 $PROGDIR/utils/get_main_csv.py $OUTDIR
+    # =======================================
+    # Step 2: Feature Extraction
+    # =======================================
+
+    ### general features
+    python3 $PROGDIR/feature_extraction/extract_general.py $OUTDIR
+    python3 $PROGDIR/feature_extraction/extract_HGNC.py $OUTDIR
+
+    ### DIOPT features
+    python3 $PROGDIR/feature_extraction/extract_DIOPT.py $OUTDIR $DIOPT
+
+    ### ClinVar features
+    python3 $PROGDIR/feature_extraction/extract_clinvar.py $OUTDIR 
+
+    ### Gene2PubMed
+    ### Features directly added to main data sheet
+    python3 $PROGDIR/data_ingestion/ingest-gene2pubmed.py $OUTDIR $GENE2PUBMED
+
+    ### VariCarta
+    python3 $PROGDIR/feature_extraction/extract_varicarta.py $OUTDIR
+
+    ### get CSV
+    python3 $PROGDIR/utils/get_main_csv.py $OUTDIR
 
 } #main
 
