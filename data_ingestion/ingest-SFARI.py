@@ -7,7 +7,7 @@ OUTDIR=sys.argv[1]
 SFARI=sys.argv[2]
 
 print("starting SFARI gene data ingestion...")
-print("Time: ",datetime.now())
+print("Time: ", datetime.now())
 
 dict_SFARI = {}
 
@@ -43,6 +43,6 @@ with open(SFARI, 'r') as SFARI_gene:
 with open(os.path.join(OUTDIR,'dict_SFARI.pickle'), 'wb') as f:
 	pickle.dump(dict_SFARI, f, protocol=pickle.HIGHEST_PROTOCOL)
 
-print("done.")
-print("time: ", datetime.now())
+#print("done.")
+#print("time: ", datetime.now())
 

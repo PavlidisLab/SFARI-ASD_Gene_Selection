@@ -29,7 +29,9 @@ with open(os.path.join(OUTDIR, 'dict_clinvar.pickle'), 'rb') as f:
 					dict_main[gene]['ClinVar: VUS'] += 1
 				elif variant['CLNSIG'] == 'Conflicting_interpretations_of_pathogenicity':
 					dict_main[gene]['ClinVar: Conflicting'] += 1
-			# CLNDN?
+			#dict_main[gene]['NCBI Entrez ID'] = dict_clinvar[gene][0]['NCBI Entrez ID']
+
+                        # CLNDN?
 
 # save main as dict
 with open(os.path.join(OUTDIR,'dict_main.pickle'), 'wb') as f:

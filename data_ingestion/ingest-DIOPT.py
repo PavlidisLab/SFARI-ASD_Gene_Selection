@@ -2,10 +2,13 @@ import os
 import sys
 import pickle
 import pandas as pd
-
+from datetime import datetime
 
 OUTDIR=sys.argv[1]
 DIOPT=sys.argv[2]
+
+print("starting DIOPT data ingestion...")
+print("time: ", datetime.now())
 
 df = pd.read_csv(DIOPT, compression='zip', header=0, sep='\t')
 #print(df.head())

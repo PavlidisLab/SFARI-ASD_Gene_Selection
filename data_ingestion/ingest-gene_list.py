@@ -20,6 +20,6 @@ with open(GENE_LIST, 'r') as gene_list:
 with open(os.path.join(OUTDIR,'dict_genes.pickle'), 'wb') as f:
 	pickle.dump(dict_genes, f, protocol=pickle.HIGHEST_PROTOCOL)
 
-print("done.")
-print("time: ", datetime.now())
+#print("done.")
+#print("time: ", datetime.now())
 

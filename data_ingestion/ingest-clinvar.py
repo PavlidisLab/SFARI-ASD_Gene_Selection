@@ -49,7 +49,9 @@ for row in vcf.itertuples():
             if ('MC' in info_dict) and (info_dict['MC'].split('|')[1] == "missense_variant"):
                 # extracting gene info
                 gene_symb = info_dict['GENEINFO'].split(':')[0]
-                info_dict['GENE_ID'] = info_dict['GENEINFO'].split(':')[1]
+                #info_dict['NCBI Entrez ID'] = info_dict['GENEINFO'].split(':')[1]
+                #if '|' in info_dict['NCBI Entrez ID']:
+                #    info_dict['NCBI Entrez ID'] = info_dict['NCBI Entrez ID'].split('|')[0]
                 del info_dict['GENEINFO']
                 
                 # adding non-INFO properties
@@ -67,6 +69,5 @@ for row in vcf.itertuples():
 with open(os.path.join(OUTDIR,'dict_clinvar.pickle'), 'wb') as f:
     pickle.dump(dict_clinvar, f, protocol=pickle.HIGHEST_PROTOCOL)
 
-print("done.")
-print("time: ", datetime.now())
+#print("done @ ", datetime.now())
 
