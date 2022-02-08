@@ -9,9 +9,9 @@ readonly PROGDIR=$(readlink -m $(dirname ${BASH_SOURCE[0]}));
 
 # Input Params===================================
 # ===============================================
-if [[ $# -lt 6 ]]; then
+if [[ $# -lt 9 ]]; then
         #echo "Usage: $PROGNAME OUTDIR GENE_LIST DB1 DB2 [...]".
-    echo "Usage: $PROGNAME <OUTDIR> <GENE LIST> <HGNC> <SFARI> <DIOPT> <CLINVAR> <GENE2PUBMED> <VARICARTA>"
+    echo "Usage: $PROGNAME <OUTDIR> <GENE LIST> <HGNC> <SFARI> <DIOPT> <CLINVAR> <GENE2PUBMED> <VARICARTA> <GNOMAD METRICS>"
     exit;
 fi
 
@@ -24,6 +24,7 @@ readonly DIOPT="$1"; shift;
 readonly CLINVAR="$1"; shift;
 readonly GENE2PUBMED="$1"; shift;
 readonly VARICARTA="$1"; shift;
+readonly GNOMAD_METRICS="$1"; shift;
 
 # Main Pipeline==================================
 # ===============================================
@@ -32,9 +33,6 @@ main () {
     source /cvmfs/soft.computecanada.ca/config/profile/bash.sh
     module load python/3.7.0;
     module load scipy-stack;
-
-    # set-up environment
-    #mkdir $OUTDIR/ingested_data
 
     # download input files
     # Helper script available to help download most of the necessary files
@@ -82,8 +80,12 @@ main () {
     ### Features directly added to main data sheet
     python3 $PROGDIR/data_ingestion/ingest-gene2pubmed.py $OUTDIR $GENE2PUBMED
 
-    ### VariCarta
+    ### VariCartaI
     python3 $PROGDIR/feature_extraction/extract_varicarta.py $OUTDIR
+
+    ### gnomAD Metrics
+    ### Features directly added to main data sheet
+    python3 $PROGDIR/feature_extraction/extract_gnomAD_metrics.py $OUTDIR $GNOMAD_METRICS
 
     ### get CSV
     python3 $PROGDIR/utils/get_main_csv.py $OUTDIR
