@@ -9,9 +9,9 @@ readonly PROGDIR=$(readlink -m $(dirname ${BASH_SOURCE[0]}));
 
 # Input Params===================================
 # ===============================================
-if [[ $# -lt 9 ]]; then
+if [[ $# -lt 10 ]]; then
         #echo "Usage: $PROGNAME OUTDIR GENE_LIST DB1 DB2 [...]".
-    echo "Usage: $PROGNAME <OUTDIR> <GENE LIST> <HGNC> <SFARI> <DIOPT> <CLINVAR> <GENE2PUBMED> <VARICARTA> <GNOMAD METRICS>"
+    echo "Usage: $PROGNAME <OUTDIR> <GENE LIST> <HGNC> <SFARI> <DIOPT> <CLINVAR> <GENE2PUBMED> <VARICARTA> <GNOMAD METRICS> <GNOMAD EXOMES>"
     exit;
 fi
 
@@ -25,14 +25,15 @@ readonly CLINVAR="$1"; shift;
 readonly GENE2PUBMED="$1"; shift;
 readonly VARICARTA="$1"; shift;
 readonly GNOMAD_METRICS="$1"; shift;
+readonly GNOMAD="$1"; shift; #tbi assumed to be in same dir
 
 # Main Pipeline==================================
 # ===============================================
 main () {
     # load required modules from Compute Canada
-    source /cvmfs/soft.computecanada.ca/config/profile/bash.sh
-    module load python/3.7.0;
-    module load scipy-stack;
+    #source /cvmfs/soft.computecanada.ca/config/profile/bash.sh
+    #module load python/3.7.0;
+    #module load scipy-stack;
 
     # download input files
     # Helper script available to help download most of the necessary files
@@ -86,6 +87,10 @@ main () {
     ### gnomAD Metrics
     ### Features directly added to main data sheet
     python3 $PROGDIR/feature_extraction/extract_gnomAD_metrics.py $OUTDIR $GNOMAD_METRICS
+
+    ### gnomAD Variants & Counts
+    mkdir $OUTDIR/gnomAD_Variants
+    python3 $PROGDIR/feature_extraction/extract_gnomAD.py $OUTDIR $OUTDIR/gnomAD_Variants $GNOMAD
 
     ### get CSV
     python3 $PROGDIR/utils/get_main_csv.py $OUTDIR
