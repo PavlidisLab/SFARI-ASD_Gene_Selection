@@ -36,6 +36,7 @@ with open(os.path.join(OUTDIR, 'dict_main.pickle'), 'rb') as f:
 
     for index, row in df_m.iterrows():
         if row['gene'] in dict_main:
+            dict_main[row['gene']]['Source'] += 'gnomAD | '
             dict_main[row['gene']]['Chromosome'] = row['chromosome']
             dict_main[row['gene']]['Starting Pos'] = row['start_position']
             dict_main[row['gene']]['End Pos'] = row['end_position']
