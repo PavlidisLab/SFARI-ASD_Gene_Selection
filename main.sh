@@ -89,7 +89,7 @@ main () {
     python3 $PROGDIR/feature_extraction/extract_gnomAD_metrics.py $OUTDIR $GNOMAD_METRICS
 
     ### gnomAD Variants & Counts
-    mkdir $OUTDIR/gnomAD_Variants
+    mkdir -p $OUTDIR/gnomAD_Variants
     python3 $PROGDIR/feature_extraction/extract_gnomAD.py $OUTDIR $OUTDIR/gnomAD_Variants $GNOMAD
 
     ### get CSV
