@@ -19,7 +19,7 @@ with open(os.path.join(OUTDIR, 'dict_main.pickle'), 'rb') as f:
             writer = vcfpy.Writer.from_path(os.path.join(VARIANTS_DIR,gene), reader.header)
             count = 0
             for record in reader.fetch(dict_main[gene]['Chromosome'],dict_main[gene]['Starting Pos'],dict_main[gene]['End Pos']):
-                if 'AF' in record.INFO and record.INFO['AF'][0] > 0.00001:
+                if 'AF' in record.INFO and record.INFO['AF'][0] > 0.0001:
                     count += 1
                     writer.write_record(record)
             dict_main[gene]['gnomAD Variant Count'] = count
