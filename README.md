@@ -1,8 +1,20 @@
 # [SFARI] ASD Gene Selection
-ASD gene selection/prioritization pipeline for SFARI project. Ref Aim 1.1 in Project Proposal Narative. Reference genome hg19.
+ASD gene selection/prioritization pipeline for SFARI project. Ref Aim 1.1 in Project Proposal Narative. 
+Reference genome hg19 for all databases used.
 
 ## Directories (DIR)
 Overviews of important project DIRs listed in this section.
+
+### Project Code DIR
+├── `/data_ingestion` database ingestion scripts  
+├── `/feature_extraction` feature extraction scripts  
+├── `/utils` helper scripts  
+│   ├── `get_main_csv.py` get csv from dict_main.pickle (in pipeline)  
+│   └── `get_input.sh` script to wget most of the input files  
+├── `main.sh` main pipeline    
+├── `run_main.sh` sample bash script of how main pipeline can be run  
+├── `requirements.txt`  
+└── `README.md`  
  
 ### Input (Data)
 (sample file names provided as example)  
@@ -25,7 +37,7 @@ Overviews of important project DIRs listed in this section.
 ├── `gene_list.txt`: [optional] via helper script to generate gene list according to SFARI filtering criteria  
 └── `main.csv` the output file  
 
-#### CSV Feature Columns
+## CSV Feature Columns
 - `Gene Symbol`: string (e.g. MYH9, ACTB)  
 - `HGNC`: integer ID (e.g. 7579, 132) (via DIOPT)  
 - `Source`: db_name | db_name | ...  
@@ -69,12 +81,4 @@ Overviews of important project DIRs listed in this section.
 ###### Gene Ontology
 - link to GO web page for each gene
 
-### Project Code DIR
 
-├── `/data_ingestion` database ingestion scripts  
-├── `/feature_extraction` feature extraction scripts  
-├── `/utils` helper scripts  
-├── `main.sh` main pipeline    
-├── `run_main.sh` sample bash script of how main pipeline can be run  
-├── `requirements.txt`  
-└── `README.md`
