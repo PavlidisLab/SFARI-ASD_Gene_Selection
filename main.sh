@@ -11,7 +11,7 @@ readonly PROGDIR=$(readlink -m $(dirname ${BASH_SOURCE[0]}));
 # ===============================================
 if [[ $# -lt 10 ]]; then
         #echo "Usage: $PROGNAME OUTDIR GENE_LIST DB1 DB2 [...]".
-    echo "Usage: $PROGNAME <OUTDIR> <GENE LIST> <HGNC> <SFARI> <DIOPT> <CLINVAR> <GENE2PUBMED> <VARICARTA> <GNOMAD METRICS> <GNOMAD EXOMES>"
+    echo "Usage: $PROGNAME <OUTDIR> <GENE LIST> <HGNC> <SFARI> <DIOPT> <CLINVAR> <GENE2PUBMED> <VARICARTA> <GNOMAD METRICS> <GNOMAD EXOMES> <FB_GENES>"
     exit;
 fi
 
@@ -26,6 +26,7 @@ readonly GENE2PUBMED="$1"; shift;
 readonly VARICARTA="$1"; shift;
 readonly GNOMAD_METRICS="$1"; shift;
 readonly GNOMAD="$1"; shift; #tbi assumed to be in same dir
+readonly FB_GENES="$1"; shift; # gene dir in flybase bulk files
 
 # Main Pipeline==================================
 # ===============================================
@@ -60,8 +61,8 @@ main () {
     ### VariCarta
     python3 $PROGDIR/data_ingestion/ingest-varicarta.py $OUTDIR $VARICARTA
 
-    ### gnomAD
-
+    ### Flybase
+    python3 $PROGDIR/data_ingestion/ingest-flybase.py $OUTDIR $FB_GENES
 
     # =======================================
     # Step 2: Feature Extraction
@@ -91,6 +92,12 @@ main () {
     ### gnomAD Variants & Counts
     mkdir -p $OUTDIR/gnomAD_Variants
     python3 $PROGDIR/feature_extraction/extract_gnomAD.py $OUTDIR $OUTDIR/gnomAD_Variants $GNOMAD
+
+    ### Flybase [Genes]
+    python3 $PROGDIR/feature_extraction/extract_flybase.py $OUTDIR
+
+    ### Gene Ontology
+    python3 $PROGDIR/feature_extraction/extract_GO.py $OUTDIR
 
     ### get CSV
     python3 $PROGDIR/utils/get_main_csv.py $OUTDIR
