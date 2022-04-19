@@ -80,5 +80,9 @@ Overviews of important project DIRs listed in this section.
 - `Flybase: Gene Summary`
 ###### Gene Ontology
 - link to GO web page for each gene
+ 
+ 
+ ### Notes
+ - PubMed counts will yield -1 for outdated gene symbols. Please replace with the most recent symbol.  
 
 
