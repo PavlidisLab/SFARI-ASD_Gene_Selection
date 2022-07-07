@@ -6,8 +6,8 @@ Reference genome hg19 for all databases used.
 Overviews of important project DIRs listed in this section.
 
 ### Project Code DIR
-├── `/data_ingestion` database ingestion scripts  
-├── `/feature_extraction` feature extraction scripts  
+├── `/data_ingestion` database ingestion scripts (processing raw bulk data files into a workable format)  
+├── `/feature_extraction` feature extraction scripts (extracting/retaining features we want-- can include project-specific filter criteria)  
 ├── `/utils` helper scripts  
 │   ├── `get_main_csv.py` get csv from dict_main.pickle (in pipeline)  
 │   └── `get_input.sh` script to wget most of the input files  
