@@ -12,7 +12,7 @@ Overviews of important project DIRs listed in this section.
 │   ├── `get_main_csv.py` get csv from dict_main.pickle (in pipeline)  
 │   └── `get_input.sh` script to wget most of the input files  
 ├── `main.sh` main pipeline    
-├── `run_main.sh` sample bash script of how main pipeline can be run  
+├── `run_main.sh` sample bash script of how main pipeline can be run. Replace directories based on need. Input parameters can be viewed at the top of main.sh    
 ├── `requirements.txt`  
 └── `README.md`  
  
@@ -83,6 +83,7 @@ Overviews of important project DIRs listed in this section.
  
  
  ### Notes
- - PubMed counts will yield -1 for outdated gene symbols. Please replace with the most recent symbol.  
+ - PubMed counts will yield -1 for outdated gene symbols. If so, please replace with the most recent symbol & rerun.  
+ - pyvcf contains deprecated dependencies. vcfpy was used instead but required a minor modification. See /home/kchen/vcfpy/    
 
 
