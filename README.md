@@ -86,6 +86,7 @@ Overviews of important project DIRs listed in this section.
  
  ### Notes
  - PubMed counts will yield -1 for outdated gene symbols. If so, please replace with the most recent symbol & rerun.  
- - pyvcf contains deprecated dependencies. vcfpy was used instead but required a minor modification. See /home/kchen/vcfpy/    
+ - pyvcf contains deprecated dependencies. vcfpy was used instead but required a minor modification. ln86 from reader.py `if path.endswith(".gz"):` was changed to `if path.endswith(".gz") or path.endswith(".bgz"):`       
+ - install all other dependencies with `conda create --name <environment_name> --file requirements.txt`   
 
 
