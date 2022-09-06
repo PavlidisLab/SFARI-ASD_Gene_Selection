@@ -43,6 +43,8 @@ main () {
     # Step 1: Data Ingestion via Database Files
     # =======================================
 
+    mkdir -p $OUTDIR
+
     ### Gene List (.txt file)
     python3 $PROGDIR/data_ingestion/ingest-gene_list.py $OUTDIR $GENE_LIST
 
