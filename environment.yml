@@ -1,0 +1,12 @@
+name: sfari-asd-gene-selection
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - numpy
+  - pandas
+  - pip
+  - python
+  - pip:
+    - pysam==0.18.0
+    - vcfpy-0.13.3+0.g89f7097.dirty-py2.py3-none-any.whl
