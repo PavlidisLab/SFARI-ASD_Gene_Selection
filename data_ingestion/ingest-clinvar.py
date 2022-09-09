@@ -12,21 +12,17 @@ CLINVAR=sys.argv[2]
 print("starting ClinVar data ingestion...")
 print("time: ", datetime.now())
 
-def get_vcf_names(vcf_path):
-    with gzip.open(vcf_path, "rt") as ifile:
-          for line in ifile:
-            if line.startswith("#CHROM"):
-                  vcf_names = [x for x in line.split('\t')]
-                  break
-    ifile.close()
+with gzip.open(CLINVAR, 'rt') as f:
+    # skip comments
+    for line in f:
+        if line.startswith("#CHROM"):
+              vcf_names = [x for x in line.split('\t')]
+              break
     # specific to ClinVar
     vcf_names[0] = str(vcf_names[0])[1:] #CHROM
     vcf_names[-1] = str(vcf_names[-1])[:-1] #INFO
-    return vcf_names
+    vcf = pd.read_table(f, header=None, names=vcf_names, dtype={'CHROM': 'str'})
 
-
-names = get_vcf_names(CLINVAR)
-vcf = pd.read_csv(CLINVAR, compression='gzip', comment='#', delim_whitespace=True, header=None, names=names)
 dict_clinvar = {}
 
 #acceptable criteria for CLNREVSTAT
