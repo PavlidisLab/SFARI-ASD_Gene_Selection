@@ -2,6 +2,8 @@
 # This is the main program for the SFARI ASD Gene Selection/Prioritization porject, 
 # Aim 1.1 from the Proposal Narrative.
 
+set -e
+
 # Script Info====================================
 # ===============================================
 readonly PROGNAME=$(basename ${BASH_SOURCE[0]});
