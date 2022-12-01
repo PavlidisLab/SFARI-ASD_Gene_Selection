@@ -1,3 +1,5 @@
+*The source code for this project has been consolidated in https://github.com/PavlidisLab/SFARI-ASD-Pipeline/.*
+
 # [SFARI] ASD Gene Selection
 ASD gene selection/prioritization pipeline for SFARI project. Ref Aim 1.1 in Project Proposal Narative. 
 Reference genome hg19 for all databases used.
